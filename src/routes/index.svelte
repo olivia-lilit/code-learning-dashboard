@@ -1,8 +1,11 @@
 <script>
     import Trackers from "../components/trackers.svelte"
-    let trackers = [ 
-    ];
+    // let trackers = [];
+    import { trackers } from "../stores"
+    $trackers = []; 
+    $: console.log("trackers", trackers)
 
 </script>
 
-<Trackers {trackers}/> 
+
+<Trackers bind:trackers={$trackers} /> 

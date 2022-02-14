@@ -5,9 +5,9 @@ let newTrackerName;
 let newTrackerTotalModules;
 let newTrackerCompletedModules;
 let newTrackerId= "";
-$: console.log(`length is ${trackers.length}`);
-$: console.log(`new id is ${newTrackerId}`);
-$: console.log(trackers);
+// $: console.log(`length is ${trackers.length}`);
+// $: console.log(`new id is ${newTrackerId}`);
+$: console.log(trackers + "trackers.svelte here");
 
 $: {
     if (trackers.length === 0){
