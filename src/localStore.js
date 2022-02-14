@@ -29,4 +29,3 @@ import { writable } from 'svelte/store';
     },
     update
   }
-}
