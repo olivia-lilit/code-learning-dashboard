@@ -2,7 +2,7 @@
     import Trackers from "../components/trackers.svelte"
     // let trackers = [];
     import { trackers } from "../stores"
-    $trackers = []; 
+    // $trackers = []; 
     $: console.log("trackers", trackers)
 
 </script>
