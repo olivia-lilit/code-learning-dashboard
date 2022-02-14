@@ -1,8 +1,6 @@
-import { writable } from 'svelte/store';
 
-export const localStore = (key, initial) => {                 
+import { writable } from 'svelte/store';          
     // receives the key of the local storage and an initial value
-
   const toString = (value) => JSON.stringify(value, null, 2);  
   // helper function
   // const toObj = JSON.parse();
