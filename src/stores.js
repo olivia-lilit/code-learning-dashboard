@@ -1,5 +1,5 @@
 import { writable } from "svelte/store"
-import { localStore } from "./localStore" 
+// import { localStore } from "./localStore" 
 import { localStorageStore } from "@babichjacob/svelte-localstorage/svelte-kit";
 
 const initialTrackers= [];
