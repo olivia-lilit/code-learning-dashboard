@@ -21,11 +21,15 @@ $: {
 }
 
 function addTracker() {
-    // add new object at end of an array, using this spread syntax instead of push to force reactivity cleanly
+    // only proceed if name and total modules was put in
+    if ((newTrackerName === "") || (newTrackerTotalModules === undefined)){
+         return alert("Please include a name and total number of modules");
+    }
+    // check if a number was typed in for completed modules, if not assign the value to zero as default
     if (newTrackerCompletedModules === undefined) {
         newTrackerCompletedModules = Number(0);
     }
-    
+    // add new object at end of an array, using this spread syntax instead of push to force reactivity cleanly
     trackers = [...trackers, {id:newTrackerId, name:newTrackerName, url:newTrackerUrl, totalModules:newTrackerTotalModules, completedModules:newTrackerCompletedModules}]
     // resets all variables back to blank to await next form values
     newTrackerName = "";
