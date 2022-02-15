@@ -1,15 +1,11 @@
 <script>
-    import Trackers from "../components/trackers.svelte"
-    // let trackers = [];
-    import { localStorageStore } from "@babichjacob/svelte-localstorage/svelte-kit"
-
-    $: console.log(localStorageStore )
+    // imports the tracker display and form and logic
+    import TrackersList from "../components/trackers.svelte"
 
     import { trackers } from "../stores"
-    // $trackers = []; 
-    $: console.log("trackers", trackers)
+    // $trackers = []; this makes stored trackers = empty
 
 </script>
 
 
-<Trackers bind:trackers={$trackers} /> 
+<TrackersList bind:trackers={$trackers} /> 

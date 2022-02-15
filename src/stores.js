@@ -1,13 +1,9 @@
-import { writable } from "svelte/store"
-// import { localStore } from "./localStore" 
 import { localStorageStore } from "@babichjacob/svelte-localstorage/svelte-kit";
 
+// create a default storage constant
 const initialTrackers= [];
 
-// export const trackers = localStore("learning-dash-svelte", initialTrackers);
+// export the localStorage syncing array for trackers
+export const trackers = localStorageStore("tracker-data", initialTrackers);
 
-// attempting above but using the babich 
-
-export const trackers = localStorageStore("learning-dash-babich", initialTrackers);
-
-
+// stands to reason you can just repeat the above a few times for things like name, focus, bookmarks
