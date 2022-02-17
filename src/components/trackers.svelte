@@ -29,6 +29,10 @@ function addTracker() {
     if (newTrackerCompletedModules === undefined) {
         newTrackerCompletedModules = Number(0);
     }
+    // create standard url = null when none was provided or the form was tabbed through
+    if(newTrackerUrl === "" || newTrackerUrl === undefined) {
+        newTrackerUrl = null;
+    }
     // add new object at end of an array, using this spread syntax instead of push to force reactivity cleanly
     trackers = [...trackers, {id:newTrackerId, name:newTrackerName, url:newTrackerUrl, totalModules:newTrackerTotalModules, completedModules:newTrackerCompletedModules}]
     // resets all variables back to blank to await next form values
@@ -83,7 +87,7 @@ function deleteTracker(tracker) {
 <ul>
     {#each trackers as tracker (tracker.id)}
     <li class="tracker"> 
-        <label for="{tracker.id}"> <a href="{tracker.url}">{tracker.name}</a></label>
+        <label for="{tracker.id}"><a href="{tracker.url}">{tracker.name}</a></label>
         <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
         <button on:click= {incrementModules(tracker)} >+1</button>
         <button on:click= {deleteTracker(tracker)}>X</button>
@@ -94,3 +98,60 @@ function deleteTracker(tracker) {
     {/each}
 
 </ul>
+
+<style>
+    * {
+        font-family: monospace;
+        --progress-color: rgb(173, 201, 162);
+        --accent-color: rgb(23, 92, 77);
+    }
+    progress {
+        /* Reset the default appearance */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+                appearance: none;
+        
+        /* Get rid of default border in Firefox. */
+        border: none;
+        
+        /* Dimensions */
+        width: 50vw;
+        height: 2vw;
+    }
+
+    progress::-webkit-progress-bar {
+        /* sets whole bar - no moz equivalent */
+        background-color: rgb(223, 223, 223);
+    }
+
+   progress::-webkit-progress-value {
+       /* sets just value */
+       background-color: var(--progress-color);
+   }
+
+   progress::-moz-progress-bar {
+       background-color: var(--progress-color);
+   }
+
+   ul, form {
+       padding: 0;
+   }
+
+   li {
+       list-style-type: none;
+   }
+
+   button {
+       background-color: white;
+        border: 1px solid var(--accent-color);
+        border-radius: 15%;
+   }
+   button:hover {
+       background-color: var(--accent-color);
+       color: white;
+       border: 1px solid var(--progress-color);
+
+       
+   }
+</style>
+
