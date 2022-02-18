@@ -7,3 +7,7 @@ const initialTrackers= [];
 export const trackers = localStorageStore("tracker-data", initialTrackers);
 
 // stands to reason you can just repeat the above a few times for things like name, focus, bookmarks
+
+const initialUserName = "bees..."
+
+export const userName = localStorageStore("user-name", initialUserName)

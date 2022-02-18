@@ -5,7 +5,11 @@
     import { trackers } from "../stores"
     // $trackers = []; this makes stored trackers = empty
 
+    import HelloName from "../components/helloName.svelte"
+
+    import { userName } from "../stores"
 </script>
 
+<HelloName bind:userName={$userName}/>
 
 <TrackersList bind:trackers={$trackers} /> 

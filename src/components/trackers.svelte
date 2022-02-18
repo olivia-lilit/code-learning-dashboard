@@ -34,8 +34,23 @@ function addTracker() {
         newTrackerUrl = null;
     }
     // add new object at end of an array, using this spread syntax instead of push to force reactivity cleanly
-    trackers = [...trackers, {id:newTrackerId, name:newTrackerName, url:newTrackerUrl, totalModules:newTrackerTotalModules, completedModules:newTrackerCompletedModules}]
+    trackers = [...trackers, {id:newTrackerId, name:newTrackerName, url:newTrackerUrl, totalModules:Number(newTrackerTotalModules), completedModules:Number(newTrackerCompletedModules)}]
     // resets all variables back to blank to await next form values
+    newTrackerName = "";
+    newTrackerUrl = "";
+    newTrackerTotalModules="";
+    newTrackerCompletedModules="";
+    newTrackerId="";
+
+    let form = document.getElementById("add-tracker-form");
+    form.classList.add("hidden")
+
+}
+
+function cancelAddTracker() {
+    let targetElement = document.getElementById("add-tracker-form");
+    console.log(targetElement);
+    targetElement.classList.add("hidden");
     newTrackerName = "";
     newTrackerUrl = "";
     newTrackerTotalModules="";
@@ -47,6 +62,7 @@ function incrementModules(tracker){
     if (tracker.completedModules < tracker.totalModules){
         //increment completedModules for the given tracker by one
         tracker.completedModules +=1;
+        console.log(typeof tracker.completedModules)
         // force reactivity and storage for the overall array
         trackers = trackers;
     }
@@ -59,29 +75,20 @@ function deleteTracker(tracker) {
     // find index of current tracker in overall array
     let trackerIndex = trackers.indexOf(tracker);
     // removes that object from the array
-    trackers.splice(trackerIndex);
+    trackers.splice(trackerIndex,1);
     // updates stored data by forcing reactivity
     trackers = trackers; 
 }
 
+function toggleHidden() {
+    let targetElements = document.getElementsByClassName("hidden");
+    for (const targetElement of targetElements){
+        console.log(targetElement);
+    targetElement.classList.toggle("hidden");
+    }
+}
+
 </script>
-
-<form autocomplete="off" on:submit|preventDefault={addTracker}>
-    <label for="resourceName">Resource Name</label>
-    <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
-    
-    <label for="resourceURL">Resource URL</label>
-    <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
-    
-    <label for="moduleTotal">Total # of Modules</label>
-    <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
-    
-    <label for="modulesCompleted"># of Modules Completed</label>
-    <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
-    
-    <button type="submit">Submit</button>
-</form>
-
 
 
 <ul>
@@ -99,10 +106,31 @@ function deleteTracker(tracker) {
 
 </ul>
 
+<button on:click={toggleHidden}>Add Tracker</button>
+
+<form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden" id="add-tracker-form">
+    <label for="resourceName">Resource Name</label>
+    <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
+    
+    <label for="resourceURL">Resource URL</label>
+    <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
+    
+    <label for="moduleTotal">Total # of Modules</label>
+    <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
+    
+    <label for="modulesCompleted"># of Modules Completed</label>
+    <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+    
+    <button type="submit">Submit</button>
+    <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
+
+</form>
+
 <style>
     * {
         font-family: monospace;
         --progress-color: rgb(173, 201, 162);
+       /* --progress-color: rgb(175, 189, 272); */
         --accent-color: rgb(23, 92, 77);
     }
     progress {
@@ -150,8 +178,24 @@ function deleteTracker(tracker) {
        background-color: var(--accent-color);
        color: white;
        border: 1px solid var(--progress-color);
-
-       
    }
+
+   a {
+       /* text-decoration:var(--accent-color) wavy underline; */
+   }
+
+   a:visited {
+       color: inherit;
+   }
+
+   .flex {
+       display: flex;
+   }
+
+    .hidden {
+       display: none;
+   }
+
+
 </style>
 
