@@ -93,17 +93,24 @@ function toggleHidden() {
 
 <ul>
     {#each trackers as tracker (tracker.id)}
-    <li class="tracker"> 
-        <label for="{tracker.id}"><a href="{tracker.url}">{tracker.name}</a></label>
-        <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
-        <button on:click= {incrementModules(tracker)} >+1</button>
-        <button on:click= {deleteTracker(tracker)}>X</button>
-    
-    </li>
+        {#if tracker.url === null}
+            <li class="tracker"> 
+                <label for="{tracker.id}">{tracker.name}</label>
+                <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                <button on:click= {incrementModules(tracker)} >+1</button>
+                <button on:click= {deleteTracker(tracker)}>X</button>
+            </li>
+        {:else}
+            <li class="tracker"> 
+                <label for="{tracker.id}"><a href="{tracker.url}">{tracker.name}</a></label>
+                <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                <button on:click= {incrementModules(tracker)} >+1</button>
+                <button on:click= {deleteTracker(tracker)}>X</button>
+            </li>
+        {/if}
     {:else}
-    <li>No trackers added</li>
+        <li>No trackers added</li>
     {/each}
-
 </ul>
 
 <button on:click={toggleHidden}>Add Tracker</button>
@@ -181,8 +188,8 @@ function toggleHidden() {
    }
 
    a {
-       /* text-decoration:var(--accent-color) wavy underline; */
-   }
+       text-decoration:var(--accent-color) wavy underline; 
+   } 
 
    a:visited {
        color: inherit;
