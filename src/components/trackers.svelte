@@ -87,7 +87,7 @@ function toggleTrackerForm() {
 </script>
 
 <div class="flex-container">
-    <div class="grid-container">
+    <div class="grid-container trackers">
             {#each trackers as tracker (tracker.id)}
                 {#if tracker.url === null}
                         <label for="{tracker.id}">{tracker.name}</label>
@@ -105,21 +105,28 @@ function toggleTrackerForm() {
             {/each}
     </div>
     
-    <button on:click={toggleTrackerForm} class="centered">Add Tracker</button>
+    <button class="add-tracker-button" on:click={toggleTrackerForm}>Add Tracker</button>
     
-    <form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden" id="add-tracker-form">
-        <label for="resourceName">Resource Name</label>
-        <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
+    <form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden flex" id="add-tracker-form">
+        <div>
+            <label for="resourceName">Resource Name *</label>
+            <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
+        </div>
+        <div>
+            <label for="resourceURL">Resource URL</label>
+            <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
+        </div>
     
-        <label for="resourceURL">Resource URL</label>
-        <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
-    
-        <label for="moduleTotal">Total # of Modules</label>
-        <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
-    
-        <label for="modulesCompleted"># of Modules Completed</label>
-        <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
-    
+        <div>
+            <label for="moduleTotal">Total # of Modules *</label>
+            <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
+        </div>
+
+        <div>
+            <label for="modulesCompleted"># of Modules Completed</label>
+            <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+        </div>
+
         <button type="submit">Submit</button>
         <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
     
@@ -158,9 +165,10 @@ function toggleTrackerForm() {
        display: flex;
        flex-direction: column;
        align-items: center;
+       padding: 1rem 0;
    }
 
-   label {
+   .trackers label {
        font-size: 1.2rem;
    }
 
@@ -176,14 +184,31 @@ function toggleTrackerForm() {
        transform: rotate(45deg);
    }
    .grid-container {
-       padding: 1% 10% 1% 5%;
         display: grid;
-        width: 100vw;
-        grid-template-columns: .5fr .1fr 1fr .1fr;
+        width: 100%;
+        grid-template-columns: .4fr .1fr 1fr .1fr;
         column-gap: 20px;
         row-gap: 10px;
         justify-items: center;
         align-items: center;
+        border: 2px solid var(--progress-color);
+        border-radius: 1em;
+        padding: 1rem;
+        margin-bottom: 1rem;
+   }
+
+   .add-tracker-button, form>button {
+       padding: .5rem;
+       border-radius: .5em;
+   }
+
+   form {
+       padding: 1rem 0;
+       gap: 1.5rem;
+   }
+
+   input {
+       width: 40%;
    }
 
 </style>

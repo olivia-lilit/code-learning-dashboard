@@ -7,7 +7,7 @@
     }
 </script>
 
-<h1 class="flex"> Hello, <span id="name" on:click={toggleEditor}>{userName}</span> </h1>
+<h1 class="flex"> Hello,  <span id="name" on:click={toggleEditor}>{userName}</span> </h1>
 <div id="change-name" class="hidden flex">
     <input type="text" bind:value= {userName}> 
     <button on:click={toggleEditor}>Done</button>
@@ -16,17 +16,27 @@
 
 
 <style>
-
+    h1 {
+        font-size: 3rem;
+        padding: 0;
+        margin: 0;
+    }
     #name {
-        border: 2px solid grey;
+        padding: 0 .5rem;
+
+    }
+
+    #name:hover {
+        cursor: text;
         border-radius: .5rem;
         background-color: rgb(238, 238, 238);
-        padding: 0 .5rem;
 
     }
 
     .flex {
         justify-content: center;
         align-items: center;
+        padding: 0;
+
     }
 </style>
