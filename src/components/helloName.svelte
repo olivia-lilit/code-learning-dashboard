@@ -30,13 +30,23 @@
         cursor: text;
         border-radius: .5rem;
         background-color: rgb(238, 238, 238);
-
     }
 
     .flex {
         justify-content: center;
         align-items: center;
         padding: 0;
+    }
 
+    button {
+        vertical-align:middle;
+        border-radius: 50%;
+        padding: .5rem;
+        border-radius: .5em;
+        margin: .5rem;
+    }
+    input {
+        width:5rem;
+        height: 2rem;
     }
 </style>

@@ -95,13 +95,13 @@ function toggleTrackerForm() {
                         <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
                 {:else}
-                        <label for="{tracker.id}"><a href="{tracker.url}">{tracker.name}</a></label>
+                        <label for="{tracker.id}"><a href="{tracker.url}" target="_blank">{tracker.name}</a></label>
                         <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
                         <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
                 {/if}
             {:else}
-                <li>No trackers added</li>
+                <span class="whole-row">No trackers added</span>
             {/each}
     </div>
     
@@ -143,8 +143,9 @@ function toggleTrackerForm() {
         
         /* Get rid of default border in Firefox. */
         border: none;
+        width: 100%;
        height: 2rem;
-       justify-self: stretch;
+       /* justify-self: stretch; */
     }
       progress::-webkit-progress-bar {
         /* sets whole bar - no moz equivalent */
@@ -170,6 +171,7 @@ function toggleTrackerForm() {
 
    .trackers label {
        font-size: 1.2rem;
+       text-align: center;
    }
 
     .delete-button, .increment-button {
@@ -196,19 +198,33 @@ function toggleTrackerForm() {
         padding: 1rem;
         margin-bottom: 1rem;
    }
+   .whole-row {
+       grid-column-start: span 4;
+       text-align: center;
+   }
 
    .add-tracker-button, form>button {
        padding: .5rem;
        border-radius: .5em;
+       font-size: .8rem;
    }
 
    form {
-       padding: 1rem 0;
-       gap: 1.5rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        gap: 1.5rem;
+        border: 2px solid var(--progress-color);
+        border-radius: 1em;
+
+
+   }
+   form * {
+       vertical-align: middle;
    }
 
    input {
        width: 40%;
+        height: 2rem;
    }
 
 </style>
