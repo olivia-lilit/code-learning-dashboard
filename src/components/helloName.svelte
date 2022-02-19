@@ -3,12 +3,12 @@
 
     function toggleEditor(){
         let nameField = document.getElementById("change-name");
-        nameField.classList.toggle("hidden-name");
+        nameField.classList.toggle("hidden");
     }
 </script>
 
-<h1> Hello, <span id="name" on:click={toggleEditor}>{userName}</span> </h1>
-<div id="change-name" class="hidden-name">
+<h1 class="flex"> Hello, <span id="name" on:click={toggleEditor}>{userName}</span> </h1>
+<div id="change-name" class="hidden flex">
     <input type="text" bind:value= {userName}> 
     <button on:click={toggleEditor}>Done</button>
 </div>
@@ -16,18 +16,17 @@
 
 
 <style>
-    *{
-        font-family: monospace;
-    }
-
-    .hidden-name {
-        display: none;
-    }
 
     #name {
         border: 2px solid grey;
         border-radius: .5rem;
         background-color: rgb(238, 238, 238);
-        padding: 1%;
+        padding: 0 .5rem;
+
+    }
+
+    .flex {
+        justify-content: center;
+        align-items: center;
     }
 </style>

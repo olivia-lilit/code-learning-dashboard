@@ -1,0 +1,38 @@
+* {
+    font-family: "Josefin Sans",monospace;
+    /* --progress-color: rgb(173, 201, 162); */
+   --progress-color: rgb(175, 189, 272);
+    --accent-color: rgb(44, 36, 85);
+    box-sizing: border-box;
+}
+
+button {
+   background-color: white;
+    border: 2px solid var(--accent-color);
+}
+button:hover {
+   background-color: var(--accent-color);
+   color: white;
+   border: 2px solid var(--progress-color);
+}
+
+a {
+    text-underline-offset: .25rem ;
+    text-decoration:var(--accent-color) wavy underline; 
+} 
+
+a:visited {
+   color: inherit;
+}
+
+.flex {
+   display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+.hidden {
+   display: none;
+}

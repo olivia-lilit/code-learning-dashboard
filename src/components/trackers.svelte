@@ -49,7 +49,6 @@ function addTracker() {
 
 function cancelAddTracker() {
     let targetElement = document.getElementById("add-tracker-form");
-    console.log(targetElement);
     targetElement.classList.add("hidden");
     newTrackerName = "";
     newTrackerUrl = "";
@@ -80,66 +79,55 @@ function deleteTracker(tracker) {
     trackers = trackers; 
 }
 
-function toggleHidden() {
-    let targetElements = document.getElementsByClassName("hidden");
-    for (const targetElement of targetElements){
-        console.log(targetElement);
-    targetElement.classList.toggle("hidden");
+function toggleTrackerForm() {
+    let form = document.getElementById("add-tracker-form");
+    form.classList.toggle("hidden")
     }
-}
 
 </script>
 
-
-<ul>
-    {#each trackers as tracker (tracker.id)}
-        {#if tracker.url === null}
-            <li class="tracker"> 
-                <label for="{tracker.id}">{tracker.name}</label>
-                <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
-                <button on:click= {incrementModules(tracker)} >+1</button>
-                <button on:click= {deleteTracker(tracker)}>X</button>
-            </li>
-        {:else}
-            <li class="tracker"> 
-                <label for="{tracker.id}"><a href="{tracker.url}">{tracker.name}</a></label>
-                <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
-                <button on:click= {incrementModules(tracker)} >+1</button>
-                <button on:click= {deleteTracker(tracker)}>X</button>
-            </li>
-        {/if}
-    {:else}
-        <li>No trackers added</li>
-    {/each}
-</ul>
-
-<button on:click={toggleHidden}>Add Tracker</button>
-
-<form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden" id="add-tracker-form">
-    <label for="resourceName">Resource Name</label>
-    <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
+<div class="flex-container">
+    <div class="grid-container">
+            {#each trackers as tracker (tracker.id)}
+                {#if tracker.url === null}
+                        <label for="{tracker.id}">{tracker.name}</label>
+                        <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
+                        <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                        <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
+                {:else}
+                        <label for="{tracker.id}"><a href="{tracker.url}">{tracker.name}</a></label>
+                        <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
+                        <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                        <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
+                {/if}
+            {:else}
+                <li>No trackers added</li>
+            {/each}
+    </div>
     
-    <label for="resourceURL">Resource URL</label>
-    <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
+    <button on:click={toggleTrackerForm} class="centered">Add Tracker</button>
     
-    <label for="moduleTotal">Total # of Modules</label>
-    <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
+    <form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden" id="add-tracker-form">
+        <label for="resourceName">Resource Name</label>
+        <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
     
-    <label for="modulesCompleted"># of Modules Completed</label>
-    <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+        <label for="resourceURL">Resource URL</label>
+        <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
     
-    <button type="submit">Submit</button>
-    <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
+        <label for="moduleTotal">Total # of Modules</label>
+        <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
+    
+        <label for="modulesCompleted"># of Modules Completed</label>
+        <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+    
+        <button type="submit">Submit</button>
+        <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
+    
+    </form>
+</div>
 
-</form>
 
 <style>
-    * {
-        font-family: monospace;
-        --progress-color: rgb(173, 201, 162);
-       /* --progress-color: rgb(175, 189, 272); */
-        --accent-color: rgb(23, 92, 77);
-    }
     progress {
         /* Reset the default appearance */
         -webkit-appearance: none;
@@ -148,61 +136,55 @@ function toggleHidden() {
         
         /* Get rid of default border in Firefox. */
         border: none;
-        
-        /* Dimensions */
-        width: 50vw;
-        height: 2vw;
+       height: 2rem;
+       justify-self: stretch;
     }
-
-    progress::-webkit-progress-bar {
+      progress::-webkit-progress-bar {
         /* sets whole bar - no moz equivalent */
         background-color: rgb(223, 223, 223);
     }
 
    progress::-webkit-progress-value {
-       /* sets just value */
+       /* sets just value bar */
        background-color: var(--progress-color);
    }
 
    progress::-moz-progress-bar {
+       /* sets just value bar */
        background-color: var(--progress-color);
    }
 
-   ul, form {
-       padding: 0;
-   }
-
-   li {
-       list-style-type: none;
-   }
-
-   button {
-       background-color: white;
-        border: 1px solid var(--accent-color);
-        border-radius: 15%;
-   }
-   button:hover {
-       background-color: var(--accent-color);
-       color: white;
-       border: 1px solid var(--progress-color);
-   }
-
-   a {
-       text-decoration:var(--accent-color) wavy underline; 
-   } 
-
-   a:visited {
-       color: inherit;
-   }
-
-   .flex {
+   div.flex-container {
        display: flex;
+       flex-direction: column;
+       align-items: center;
    }
 
-    .hidden {
-       display: none;
+   label {
+       font-size: 1.2rem;
    }
 
+    .delete-button, .increment-button {
+        font-size: 1.5rem;
+        vertical-align:middle;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+   }
+
+   .delete-button {
+       transform: rotate(45deg);
+   }
+   .grid-container {
+       padding: 1% 10% 1% 5%;
+        display: grid;
+        width: 100vw;
+        grid-template-columns: .5fr .1fr 1fr .1fr;
+        column-gap: 20px;
+        row-gap: 10px;
+        justify-items: center;
+        align-items: center;
+   }
 
 </style>
 
