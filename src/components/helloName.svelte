@@ -22,8 +22,7 @@
         margin: 0;
     }
     #name {
-        padding: 0 .5rem;
-
+        padding: .2rem .5rem 0 .5rem;
     }
 
     #name:hover {
