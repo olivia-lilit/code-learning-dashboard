@@ -112,7 +112,6 @@ function showTrackerForm() {
     }
 
 </script>
-<!-- ({tracker.completedModules}/{tracker.totalModules}) -->
 
 <div class="flex-container">
     <div class="grid-container trackers">
@@ -134,7 +133,6 @@ function showTrackerForm() {
                             <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
                             <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
                         </div>
-                        <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
                         <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
                 {/if}
