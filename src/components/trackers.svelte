@@ -44,7 +44,6 @@ function addTracker() {
 
     let form = document.getElementById("add-tracker-form");
     form.classList.add("hidden")
-
 }
 
 function cancelAddTracker() {
@@ -57,11 +56,39 @@ function cancelAddTracker() {
     newTrackerId="";
 }
 
+let currentTrackerName; 
+let currentTrackerUrl;
+let currentTrackerTotalModules;
+let currentTrackerCompletedModules;
+let currentTrackerId;
+
+function editTrackerToggle(tracker) {
+    let otherForms = document.querySelectorAll("form.editor");
+    for (const otherForm of otherForms){
+        otherForm.classList.add("hidden")
+    }
+    let form = document.getElementById(`edit-tracker-${tracker.id}`);
+    console.log(form);
+    form.classList.toggle("hidden");
+    currentTrackerName = tracker.name ; 
+    currentTrackerUrl = tracker.url;
+    currentTrackerTotalModules = tracker.totalModules;
+    currentTrackerCompletedModules = tracker.completedModules;
+    currentTrackerId = tracker.id;
+    trackers[trackers.indexOf(tracker)] = {id:currentTrackerId, name:currentTrackerName, url:currentTrackerUrl, totalModules:Number(currentTrackerTotalModules), completedModules:Number(currentTrackerCompletedModules)};
+    trackers=trackers;
+}
+function hideTrackerEditor(tracker) {
+    let form = document.getElementById(`edit-tracker-${tracker.id}`);
+    form.classList.add("hidden");
+}
+
+
+
 function incrementModules(tracker){
     if (tracker.completedModules < tracker.totalModules){
         //increment completedModules for the given tracker by one
         tracker.completedModules +=1;
-        console.log(typeof tracker.completedModules)
         // force reactivity and storage for the overall array
         trackers = trackers;
     }
@@ -79,9 +106,9 @@ function deleteTracker(tracker) {
     trackers = trackers; 
 }
 
-function toggleTrackerForm() {
+function showTrackerForm() {
     let form = document.getElementById("add-tracker-form");
-    form.classList.toggle("hidden")
+    form.classList.remove("hidden");
     }
 
 </script>
@@ -93,11 +120,14 @@ function toggleTrackerForm() {
                         <label for="{tracker.id}">{tracker.name}</label>
                         <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
                         <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                        <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
+                        
                 {:else}
                         <label for="{tracker.id}"><a href="{tracker.url}" target="_blank">{tracker.name}</a></label>
                         <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
                         <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                        <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
                 {/if}
             {:else}
@@ -105,7 +135,7 @@ function toggleTrackerForm() {
             {/each}
     </div>
     
-    <button class="add-tracker-button" on:click={toggleTrackerForm}>Add Tracker</button>
+    <button class="add-tracker-button" on:click={showTrackerForm}>Add Tracker</button>
     
     <form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden flex" id="add-tracker-form">
         <div>
@@ -127,10 +157,35 @@ function toggleTrackerForm() {
             <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Add</button>
         <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
     
     </form>
+
+    {#each trackers as tracker (tracker.id)}
+        <form autocomplete="off"  class="hidden flex editor" id="edit-tracker-{tracker.id}">
+            <div>
+                <label for="resourceName">Resource Name *</label>
+                <input bind:value={tracker.name} type="text" name="resourceName" id="resourceName">
+            </div>
+            <div>
+                <label for="resourceURL">Resource URL</label>
+                <input bind:value={tracker.url} type="url" name="resourceUrl" id="resourceUrl">
+            </div>
+        
+            <div>
+                <label for="moduleTotal">Total # of Modules *</label>
+                <input bind:value={tracker.totalModules} type="number" name="moduleTotal" id="moduleTotal">
+            </div>
+
+            <div>
+                <label for="modulesCompleted"># of Modules Completed</label>
+                <input bind:value={tracker.completedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+            </div>
+
+            <button on:click={hideTrackerEditor(tracker)}>Finish</button>
+        </form>
+    {/each}
 </div>
 
 
@@ -174,7 +229,7 @@ function toggleTrackerForm() {
        text-align: center;
    }
 
-    .delete-button, .increment-button {
+    .delete-button, .increment-button,.edit-button {
         font-size: 1.5rem;
         vertical-align:middle;
         border-radius: 50%;
@@ -188,9 +243,9 @@ function toggleTrackerForm() {
    .grid-container {
         display: grid;
         width: 100%;
-        grid-template-columns: .4fr .1fr 1fr .1fr;
+        grid-template-columns: .2fr .05fr 1.3fr .05fr .05fr;
         column-gap: 20px;
-        row-gap: 10px;
+        row-gap: 15px;
         justify-items: center;
         align-items: center;
         border: 2px solid var(--progress-color);
