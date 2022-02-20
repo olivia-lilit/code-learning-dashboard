@@ -112,21 +112,29 @@ function showTrackerForm() {
     }
 
 </script>
+<!-- ({tracker.completedModules}/{tracker.totalModules}) -->
 
 <div class="flex-container">
     <div class="grid-container trackers">
             {#each trackers as tracker (tracker.id)}
                 {#if tracker.url === null}
-                        <label for="{tracker.id}">{tracker.name}</label>
+                        <label for="{tracker.id}">{tracker.name} </label>
                         <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
-                        <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                        <div class="progress-bar">
+                            <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
+                            <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
+                        </div>
                         <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
                         
                 {:else}
                         <label for="{tracker.id}"><a href="{tracker.url}" target="_blank">{tracker.name}</a></label>
                         <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
-                        <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"> </progress>
+                        <div class="progress-bar">
+                            <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
+                            <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
+                        </div>
+                        <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
                         <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
                         <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
                 {/if}
@@ -199,9 +207,9 @@ function showTrackerForm() {
         /* Get rid of default border in Firefox. */
         border: none;
         width: 100%;
-       height: 2rem;
+       height: 3rem;
        /* justify-self: stretch; */
-    }
+        }
       progress::-webkit-progress-bar {
         /* sets whole bar - no moz equivalent */
         background-color: rgb(223, 223, 223);
@@ -227,6 +235,22 @@ function showTrackerForm() {
    .trackers label {
        font-size: 1.2rem;
        text-align: center;
+       line-height: 120%;
+   }
+
+   .progress-bar {
+    position:relative;
+    width:100%;
+
+   }
+   .progress-numbers {
+       position: absolute;
+       left: .8rem;
+       top:1.1rem;
+       color: var(--accent-color);
+       font-weight: 300;
+       font-size: .8rem;
+
    }
 
     .delete-button, .increment-button,.edit-button {

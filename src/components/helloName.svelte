@@ -1,16 +1,21 @@
 <script>
     export let userName; 
 
-    function toggleEditor(){
+    function showEditor(){
         let nameField = document.getElementById("change-name");
-        nameField.classList.toggle("hidden");
+        nameField.classList.remove("hidden");
+    }
+
+    function hideEditor(){
+        let nameField = document.getElementById("change-name");
+        nameField.classList.add("hidden"); 
     }
 </script>
 
-<h1 class="flex"> Hello,  <span id="name" on:click={toggleEditor}>{userName}</span> </h1>
+<h1 class="flex"> Hello,  <span id="name" on:click={showEditor}>{userName}</span> </h1>
 <div id="change-name" class="hidden flex">
     <input type="text" bind:value= {userName}> 
-    <button on:click={toggleEditor}>Done</button>
+    <button on:click={hideEditor}>Done</button>
 </div>
 
 
@@ -22,7 +27,7 @@
         margin: 0;
     }
     #name {
-        padding: .2rem .5rem 0 .5rem;
+        padding: .2rem .5rem;
     }
 
     #name:hover {
