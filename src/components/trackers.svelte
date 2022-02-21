@@ -112,34 +112,58 @@ function showTrackerForm() {
     }
 
 </script>
-
+<!-- 
 <div class="flex-container">
     <div class="grid-container trackers">
             {#each trackers as tracker (tracker.id)}
-                {#if tracker.url === null}
-                        <label for="{tracker.id}">{tracker.name} </label>
-                        <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
-                        <div class="progress-bar">
-                            <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
-                            <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
-                        </div>
-                        <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
-                        <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
-                        
+                <label for="{tracker.id}"> 
+                {#if tracker.url !== null}
+                    <a href="{tracker.url}" target="_blank">{tracker.name}</a>
                 {:else}
-                        <label for="{tracker.id}"><a href="{tracker.url}" target="_blank">{tracker.name}</a></label>
-                        <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
-                        <div class="progress-bar">
-                            <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
-                            <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
-                        </div>
-                        <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
-                        <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
+                    {tracker.name} 
                 {/if}
+                </label>
+                <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
+                <div class="progress-bar">
+                    <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
+                    <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
+                </div>
+                <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
+                <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
             {:else}
                 <span class="whole-row">No trackers added</span>
             {/each}
     </div>
+</div> -->
+
+<!-- fuck around and find out version BELOW - goal is to make it display as before for web/tablet and as drawn out for mobile-->
+
+<div class="flex-container">
+    <div class="grid-container trackers">
+        {#each trackers as tracker (tracker.id)}
+                <label for="{tracker.id}">
+                {#if tracker.url !== null}
+                    <a href="{tracker.url}" target="_blank">{tracker.name}</a>
+                {:else}
+                    {tracker.name}
+                {/if}
+                </label>
+                <div class="button-container">
+                    <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
+                    <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
+                </div>
+
+            <div class="progress-bar">
+                <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
+                <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
+            </div>
+
+
+
+        {:else}
+            <span class="whole-row">No trackers added</span>
+        {/each}
+</div>
     
     <button class="add-tracker-button" on:click={showTrackerForm}>Add Tracker</button>
     
@@ -190,6 +214,7 @@ function showTrackerForm() {
             </div>
 
             <button on:click={hideTrackerEditor(tracker)}>Finish</button>
+            <button class="delete-button" on:click= {deleteTracker(tracker)}>Delete</button>
         </form>
     {/each}
 </div>
@@ -197,29 +222,23 @@ function showTrackerForm() {
 
 <style>
     progress {
-        /* Reset the default appearance */
         -webkit-appearance: none;
         -moz-appearance: none;
-                appearance: none;
-        
-        /* Get rid of default border in Firefox. */
+        appearance: none;
         border: none;
         width: 100%;
        height: 3rem;
-       /* justify-self: stretch; */
         }
-      progress::-webkit-progress-bar {
-        /* sets whole bar - no moz equivalent */
+
+    progress::-webkit-progress-bar {
         background-color: rgb(223, 223, 223);
     }
 
    progress::-webkit-progress-value {
-       /* sets just value bar */
        background-color: var(--progress-color);
    }
 
    progress::-moz-progress-bar {
-       /* sets just value bar */
        background-color: var(--progress-color);
    }
 
@@ -251,29 +270,34 @@ function showTrackerForm() {
 
    }
 
-    .delete-button, .increment-button,.edit-button {
+    .increment-button,.edit-button {
         font-size: 1.5rem;
         vertical-align:middle;
         border-radius: 50%;
         width: 40px;
         height: 40px;
    }
-
-   .delete-button {
-       transform: rotate(45deg);
-   }
    .grid-container {
         display: grid;
         width: 100%;
-        grid-template-columns: .2fr .05fr 1.3fr .05fr .05fr;
-        column-gap: 20px;
-        row-gap: 15px;
+        grid-template-columns: .2fr .15fr 1.3fr;
+        column-gap: 15px;
+        row-gap: 20px;
         justify-items: center;
         align-items: center;
         border: 2px solid var(--progress-color);
         border-radius: 1em;
-        padding: 1rem;
+        padding: 1rem 3rem 1rem 2rem;
         margin-bottom: 1rem;
+   }
+
+   .button-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 10px;
+
+        /* width: 100%; */
+
    }
    .whole-row {
        grid-column-start: span 4;
@@ -302,6 +326,58 @@ function showTrackerForm() {
    input {
        width: 40%;
         height: 2rem;
+   }
+
+   .delete-button:hover {
+       background-color: firebrick;
+       border-color: firebrick;
+   }
+
+   @media screen and (max-width: 600px){
+   
+        progress {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: none;
+        width: 100%;
+       height: 1.75rem;
+       margin-bottom: 15px;
+        }
+    
+        .grid-container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        align-items: center;
+        border: 2px solid var(--progress-color);
+        border-radius: 1em;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        row-gap: 5px;
+        }
+
+        .trackers label{
+            width: 100%;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .increment-button, .edit-button {
+            font-size: 1rem;
+            width: 26.4px;
+            height: 26.4px;
+        }
+
+        span.progress-numbers {
+            display: none;
+        }
+
+        form {
+            width: 100%;
+            flex-wrap: wrap;
+        }
    }
 
 </style>
