@@ -360,15 +360,15 @@ function showTrackerForm() {
 
         .trackers label{
             width: 100%;
-            font-size: 1rem;
+            font-size: 1.2rem;
             text-align: center;
         }
 
-        .increment-button, .edit-button {
-            font-size: 1rem;
-            width: 26.4px;
-            height: 26.4px;
-        }
+        /* .increment-button, .edit-button {
+            font-size: 1.5rem;
+            width: 30px;
+            height: 30px;
+        } */
 
         span.progress-numbers {
             display: none;
@@ -378,7 +378,17 @@ function showTrackerForm() {
             width: 100%;
             flex-wrap: wrap;
         }
-   }
+        button {
+            background-color: white;
+            border: 2px solid var(--accent-color);
+        }
+
+        button:hover{
+            color: unset;
+            background-color: white;
+            border: 2px solid var(--accent-color);
+            }
+        }
 
 </style>
 
