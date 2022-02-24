@@ -1,4 +1,7 @@
 <script>
+import { prevent_default } from "svelte/internal";
+
+
 // creates the top level variable trackers for the component Trackers
 export let trackers;
 
@@ -84,7 +87,6 @@ function hideTrackerEditor(tracker) {
 }
 
 
-
 function incrementModules(tracker){
     if (tracker.completedModules < tracker.totalModules){
         //increment completedModules for the given tracker by one
@@ -124,7 +126,6 @@ function hideSettingsMenu(){
 // Theme Functions
 function changeTheme(event) {
     let className = event.target.id;
-    console.log(className);
     let root = document.querySelector(":root");
     root.classList.remove(...root.classList);
     root.classList.add(className);
@@ -162,21 +163,14 @@ function changeTheme(event) {
 <div class="optionsMenu flex">
     <button class="add-tracker-button" on:click={showTrackerForm}>Add Tracker</button>
 
-    <button on:click={showSettingsMenu} id="settingsButton">Settings</button>
+    <button on:click={showSettingsMenu} id="settingsButton">Change Theme</button>
 </div>
 <div id="settingsMenu" class="hidden flex">
-    <section id="themePicker">
-        <button id="greenTheme" class="theme greenTheme" on:click={changeTheme}>Verdant</button>
-        <button id="yellowTheme"class="theme yellowTheme"on:click={changeTheme}>Sunny</button>
-        <button id="purpleTheme" class="theme purpleTheme"on:click={changeTheme}>Flora</button>
-        <button id="greyTheme"class="theme greyTheme"on:click={changeTheme}>Minimal</button>
-    </section>
-    <section id="numbersToggle">
-        numbers
-    </section>
-    <section id="percentsToggle">
-        %%%
-    </section>
+    <button id="purpleTheme" class="theme purpleTheme"on:click={changeTheme}>Default</button>
+    <button id="greenTheme" class="theme greenTheme" on:click={changeTheme}>Verdant</button>
+    <button id="blueTheme"class="theme blueTheme"on:click={changeTheme}>Rainy</button>
+    <button id="pinkTheme" class="theme pinkTheme"on:click={changeTheme}>Floral</button>
+    <button id="greyTheme"class="theme greyTheme"on:click={changeTheme}>Minimal</button>
     <button on:click={hideSettingsMenu}>Finish</button>
 </div>
     
@@ -226,7 +220,7 @@ function changeTheme(event) {
             <input bind:value={tracker.completedModules} type="number" name="modulesCompleted" id="modulesCompleted">
         </div>
 
-        <button on:click={hideTrackerEditor(tracker)}>Finish</button>
+        <button on:click|preventDefault={hideTrackerEditor(tracker)}>Finish</button>
         <button class="delete-button" on:click= {deleteTracker(tracker)}>Delete</button>
     </form>
 {/each}
@@ -248,11 +242,11 @@ function changeTheme(event) {
     }
 
    progress::-webkit-progress-value {
-       background-color: var(--progress-color);
+    background-color: var(--progress-color,rgb(185, 181, 243) );
    }
 
    progress::-moz-progress-bar {
-       background-color: var(--progress-color);
+        background-color: var(--progress-color, rgb(185, 181, 243));
    }
 
    div.flex-container {
@@ -277,7 +271,7 @@ function changeTheme(event) {
        position: absolute;
        left: .8rem;
        top:1.1rem;
-       color: var(--accent-color);
+       color: var(--accent-color, rgb(69, 60, 148));
        font-weight: 300;
        font-size: .8rem;
 
@@ -298,7 +292,7 @@ function changeTheme(event) {
         row-gap: 20px;
         justify-items: center;
         align-items: center;
-        border: 2px solid var(--progress-color);
+        border: 2px solid var(--progress-color, rgb(185, 181, 243));
         border-radius: 1em;
         padding: 1rem 3rem 1rem 2rem;
         margin-bottom: 1rem;
@@ -328,7 +322,7 @@ function changeTheme(event) {
         padding: 1rem;
         margin: 1rem 0;
         gap: 1.5rem;
-        border: 2px solid var(--progress-color);
+        border: 2px solid var(--progress-color, rgb(185, 181, 243));
         border-radius: 1em;
         justify-content: space-evenly;
 
@@ -353,6 +347,18 @@ function changeTheme(event) {
         justify-content: center;
         }
 
+    button.theme {
+        background-color: var(--progress-color);
+        border-color: var(--accent-color);
+        color: black;
+    }
+
+    button.theme:hover{
+        background-color: var(--accent-color);
+        border-color: var(--progress-color);
+        color: white;
+    }
+
    @media screen and (max-width: 600px){
    
         progress {
@@ -371,7 +377,7 @@ function changeTheme(event) {
         grid-template-columns: 1fr;
         justify-items: center;
         align-items: center;
-        border: 2px solid var(--progress-color);
+        border: 2px solid var(--progress-color, rgb(185, 181, 243));
         border-radius: 1em;
         padding: 1rem;
         margin-bottom: 1rem;
@@ -394,13 +400,13 @@ function changeTheme(event) {
         }
         button {
             background-color: white;
-            border: 2px solid var(--accent-color);
+            border: 2px solid var(--accent-color, rgb(69, 60, 148));
         }
 
         button:hover{
             color: unset;
             background-color: white;
-            border: 2px solid var(--accent-color);
+            border: 2px solid var(--accent-color, rgb(69, 60, 148));
             }
    }
 </style>
