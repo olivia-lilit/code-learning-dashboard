@@ -126,9 +126,9 @@ function changeTheme(event) {
     let className = event.target.id;
     console.log(className);
     let root = document.querySelector(":root");
-    root.classList.toggle(className);
+    root.classList.remove(...root.classList);
+    root.classList.add(className);
 }
-
 
 </script>
 
@@ -166,10 +166,10 @@ function changeTheme(event) {
 </div>
 <div id="settingsMenu" class="hidden flex">
     <section id="themePicker">
-        <button id="greenTheme" class="theme" on:click={changeTheme}>Verdant</button>
-        <button id="yellowTheme"class="theme"on:click={changeTheme}>Sunny</button>
-        <button id="purpleTheme" class="theme"on:click={changeTheme}>Flora</button>
-        <button id="greyTheme"class="theme"on:click={changeTheme}>Minimal</button>
+        <button id="greenTheme" class="theme greenTheme" on:click={changeTheme}>Verdant</button>
+        <button id="yellowTheme"class="theme yellowTheme"on:click={changeTheme}>Sunny</button>
+        <button id="purpleTheme" class="theme purpleTheme"on:click={changeTheme}>Flora</button>
+        <button id="greyTheme"class="theme greyTheme"on:click={changeTheme}>Minimal</button>
     </section>
     <section id="numbersToggle">
         numbers

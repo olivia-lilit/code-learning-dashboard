@@ -1,8 +1,8 @@
 * {
     font-family: "Josefin Sans",monospace;
     box-sizing: border-box;
-    --progress-color: rgb(167, 167, 167);
-    --accent-color: rgb(54, 54, 54);
+    /* --progress-color: rgb(167, 167, 167);
+    --accent-color: rgb(54, 54, 54); */
 }
 
 *.purpleTheme {
@@ -12,8 +12,20 @@
 
 *.greenTheme {
    --progress-color: rgb(173, 201, 162);
-   --accent-color: rgb(44, 36, 85);
+   --accent-color: rgb(59, 83, 31);
 }
+
+*.yellowTheme {
+   --progress-color: rgb(255, 216, 41);
+   --accent-color: rgb(97, 60, 17);
+}
+
+*.greyTheme {
+    --progress-color: rgb(167, 167, 167);
+    --accent-color: rgb(54, 54, 54);
+
+}
+
 
 body {
    margin: 2rem 4%;
