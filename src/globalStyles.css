@@ -1,13 +1,23 @@
 * {
     font-family: "Josefin Sans",monospace;
-    /* --progress-color: rgb(173, 201, 162); */
-   --progress-color: rgb(175, 189, 272);
-    --accent-color: rgb(44, 36, 85);
     box-sizing: border-box;
+    --progress-color: rgb(167, 167, 167);
+    --accent-color: rgb(54, 54, 54);
+}
+
+*.purpleTheme {
+   --progress-color: rgb(175, 189, 272);
+   --accent-color: rgb(44, 36, 85);
+}
+
+*.greenTheme {
+   --progress-color: rgb(173, 201, 162);
+   --accent-color: rgb(44, 36, 85);
 }
 
 body {
-   margin: 3rem 4%;
+   margin: 2rem 4%;
+   position: relative;
 }
 
 button {

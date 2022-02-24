@@ -111,32 +111,26 @@ function showTrackerForm() {
     form.classList.remove("hidden");
     }
 
-</script>
-<!-- 
-<div class="flex-container">
-    <div class="grid-container trackers">
-            {#each trackers as tracker (tracker.id)}
-                <label for="{tracker.id}"> 
-                {#if tracker.url !== null}
-                    <a href="{tracker.url}" target="_blank">{tracker.name}</a>
-                {:else}
-                    {tracker.name} 
-                {/if}
-                </label>
-                <button class="increment-button" on:click= {incrementModules(tracker)} >+</button>
-                <div class="progress-bar">
-                    <progress id="{tracker.id}" max="{tracker.totalModules}" value="{tracker.completedModules}"></progress>
-                    <span class="progress-numbers">{tracker.completedModules}/{tracker.totalModules}</span>
-                </div>
-                <button class="edit-button" on:click= {editTrackerToggle(tracker)}>△</button>
-                <button class="delete-button" on:click= {deleteTracker(tracker)}>+</button>
-            {:else}
-                <span class="whole-row">No trackers added</span>
-            {/each}
-    </div>
-</div> -->
+function showSettingsMenu(){
+    let menu = document.querySelector("#settingsMenu");
+    menu.classList.remove("hidden");
+}
 
-<!-- fuck around and find out version BELOW - goal is to make it display as before for web/tablet and as drawn out for mobile-->
+function hideSettingsMenu(){
+    let menu = document.querySelector("#settingsMenu");
+    menu.classList.add("hidden");
+}
+
+// Theme Functions
+function changeTheme(event) {
+    let className = event.target.id;
+    console.log(className);
+    let root = document.querySelector(":root");
+    root.classList.toggle(className);
+}
+
+
+</script>
 
 <div class="flex-container">
     <div class="grid-container trackers">
@@ -165,58 +159,77 @@ function showTrackerForm() {
         {/each}
 </div>
     
+<div class="optionsMenu flex">
     <button class="add-tracker-button" on:click={showTrackerForm}>Add Tracker</button>
+
+    <button on:click={showSettingsMenu} id="settingsButton">Settings</button>
+</div>
+<div id="settingsMenu" class="hidden flex">
+    <section id="themePicker">
+        <button id="greenTheme" class="theme" on:click={changeTheme}>Verdant</button>
+        <button id="yellowTheme"class="theme"on:click={changeTheme}>Sunny</button>
+        <button id="purpleTheme" class="theme"on:click={changeTheme}>Flora</button>
+        <button id="greyTheme"class="theme"on:click={changeTheme}>Minimal</button>
+    </section>
+    <section id="numbersToggle">
+        numbers
+    </section>
+    <section id="percentsToggle">
+        %%%
+    </section>
+    <button on:click={hideSettingsMenu}>Finish</button>
+</div>
     
-    <form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden flex" id="add-tracker-form">
+<form autocomplete="off" on:submit|preventDefault={addTracker} class="hidden flex" id="add-tracker-form">
+    <div>
+        <label for="resourceName">Resource Name *</label>
+        <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
+    </div>
+    <div>
+        <label for="resourceURL">Resource URL</label>
+        <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
+    </div>
+
+    <div>
+        <label for="moduleTotal">Total # of Modules *</label>
+        <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
+    </div>
+
+    <div>
+        <label for="modulesCompleted"># of Modules Completed</label>
+        <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+    </div>
+
+    <button type="submit">Add</button>
+    <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
+
+</form>
+
+{#each trackers as tracker (tracker.id)}
+    <form autocomplete="off"  class="hidden flex editor" id="edit-tracker-{tracker.id}">
         <div>
             <label for="resourceName">Resource Name *</label>
-            <input bind:value={newTrackerName} type="text" name="resourceName" id="resourceName">
+            <input bind:value={tracker.name} type="text" name="resourceName" id="resourceName">
         </div>
         <div>
             <label for="resourceURL">Resource URL</label>
-            <input bind:value={newTrackerUrl} type="url" name="resourceUrl" id="resourceUrl">
+            <input bind:value={tracker.url} type="url" name="resourceUrl" id="resourceUrl">
         </div>
     
         <div>
             <label for="moduleTotal">Total # of Modules *</label>
-            <input bind:value={newTrackerTotalModules} type="number" name="moduleTotal" id="moduleTotal">
+            <input bind:value={tracker.totalModules} type="number" name="moduleTotal" id="moduleTotal">
         </div>
 
         <div>
             <label for="modulesCompleted"># of Modules Completed</label>
-            <input bind:value={newTrackerCompletedModules} type="number" name="modulesCompleted" id="modulesCompleted">
+            <input bind:value={tracker.completedModules} type="number" name="modulesCompleted" id="modulesCompleted">
         </div>
 
-        <button type="submit">Add</button>
-        <button on:click|preventDefault={cancelAddTracker}>Cancel</button>
-    
+        <button on:click={hideTrackerEditor(tracker)}>Finish</button>
+        <button class="delete-button" on:click= {deleteTracker(tracker)}>Delete</button>
     </form>
-
-    {#each trackers as tracker (tracker.id)}
-        <form autocomplete="off"  class="hidden flex editor" id="edit-tracker-{tracker.id}">
-            <div>
-                <label for="resourceName">Resource Name *</label>
-                <input bind:value={tracker.name} type="text" name="resourceName" id="resourceName">
-            </div>
-            <div>
-                <label for="resourceURL">Resource URL</label>
-                <input bind:value={tracker.url} type="url" name="resourceUrl" id="resourceUrl">
-            </div>
-        
-            <div>
-                <label for="moduleTotal">Total # of Modules *</label>
-                <input bind:value={tracker.totalModules} type="number" name="moduleTotal" id="moduleTotal">
-            </div>
-
-            <div>
-                <label for="modulesCompleted"># of Modules Completed</label>
-                <input bind:value={tracker.completedModules} type="number" name="modulesCompleted" id="modulesCompleted">
-            </div>
-
-            <button on:click={hideTrackerEditor(tracker)}>Finish</button>
-            <button class="delete-button" on:click= {deleteTracker(tracker)}>Delete</button>
-        </form>
-    {/each}
+{/each}
 </div>
 
 
@@ -304,18 +317,20 @@ function showTrackerForm() {
        text-align: center;
    }
 
-   .add-tracker-button, form>button {
+   .add-tracker-button, form>button, .optionsMenu *, #settingsMenu * {
        padding: .5rem;
        border-radius: .5em;
        font-size: .8rem;
    }
 
-   form {
+   form, #settingsMenu {
+        width: 100%;
         padding: 1rem;
         margin: 1rem 0;
         gap: 1.5rem;
         border: 2px solid var(--progress-color);
         border-radius: 1em;
+        justify-content: space-evenly;
 
 
    }
@@ -332,6 +347,11 @@ function showTrackerForm() {
        background-color: firebrick;
        border-color: firebrick;
    }
+   .optionsMenu {
+        width: 100%;
+        gap: 10%;
+        justify-content: center;
+        }
 
    @media screen and (max-width: 600px){
    
@@ -341,7 +361,7 @@ function showTrackerForm() {
         appearance: none;
         border: none;
         width: 100%;
-       height: 1.75rem;
+       height: 2rem;
        margin-bottom: 15px;
         }
     
@@ -364,12 +384,6 @@ function showTrackerForm() {
             text-align: center;
         }
 
-        /* .increment-button, .edit-button {
-            font-size: 1.5rem;
-            width: 30px;
-            height: 30px;
-        } */
-
         span.progress-numbers {
             display: none;
         }
@@ -388,7 +402,6 @@ function showTrackerForm() {
             background-color: white;
             border: 2px solid var(--accent-color);
             }
-        }
-
+   }
 </style>
 
