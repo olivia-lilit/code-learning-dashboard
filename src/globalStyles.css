@@ -1,74 +1,72 @@
 * {
-    font-family: "Josefin Sans",monospace;
-    box-sizing: border-box;
+	font-family: 'Josefin Sans', monospace;
+	box-sizing: border-box;
 }
 
 *.purpleTheme {
-   --progress-color: rgb(185, 181, 243);
-   --accent-color: rgb(69, 60, 148);
+	--progress-color: rgb(185, 181, 243);
+	--accent-color: rgb(69, 60, 148);
 }
 
 *.greenTheme {
-   --progress-color: rgb(173, 201, 162);
-   --accent-color: rgb(59, 83, 31);
+	--progress-color: rgb(173, 201, 162);
+	--accent-color: rgb(59, 83, 31);
 }
 
 *.blueTheme {
-   --progress-color: rgb(193, 222, 230);
-   --accent-color: rgb(63, 120, 153);
+	--progress-color: rgb(193, 222, 230);
+	--accent-color: rgb(63, 120, 153);
 }
 
 *.greyTheme {
-    --progress-color: rgb(167, 167, 167);
-    --accent-color: rgb(54, 54, 54);
+	--progress-color: rgb(167, 167, 167);
+	--accent-color: rgb(54, 54, 54);
 }
 
 *.pinkTheme {
-   --progress-color: rgb(241, 163, 202);
-   --accent-color: rgb(185, 18, 101);
-
+	--progress-color: rgb(241, 163, 202);
+	--accent-color: rgb(185, 18, 101);
 }
 
-
 body {
-   margin: 2rem 4%;
-   position: relative;
+	margin: 2rem 4%;
+	position: relative;
 }
 
 button {
-   background-color: white;
-    border: 2px solid var(--accent-color, rgb(69, 60, 148));
+	background-color: white;
+	border: 2px solid var(--accent-color, rgb(69, 60, 148));
 }
 button:hover {
-   background-color: var(--accent-color, rgb(69, 60, 148));
-   color: white;
-   border: 2px solid var(--progress-color, rgb(185, 181, 243));
+	background-color: var(--accent-color, rgb(69, 60, 148));
+	color: white;
+	border: 2px solid var(--progress-color, rgb(185, 181, 243));
 }
 
 a {
-    text-underline-offset: .25rem ;
-    text-decoration:var(--accent-color, rgb(69, 60, 148)) wavy underline; 
-} 
+	text-underline-offset: 0.25rem;
+	text-decoration: var(--accent-color, rgb(69, 60, 148)) wavy underline;
+}
 
 a:visited {
-   color: inherit;
+	color: inherit;
 }
 
 .flex {
-   display: flex;
-   align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .grid {
-    display: grid;
+	display: grid;
 }
 
 .hidden {
-   display: none;
+	display: none;
 }
 
-@media screen and (max-width: 600px){
-   body {
-      margin: 4%;
-   }
+@media screen and (max-width: 600px) {
+	body {
+		margin: 4%;
+	}
 }
