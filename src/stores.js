@@ -1,13 +1,10 @@
-import { localStorageStore } from "@babichjacob/svelte-localstorage/svelte-kit";
+// use the Babich store template
+import { localStorageStore } from '@babichjacob/svelte-localstorage/svelte-kit';
 
-// create a default storage constant
-const initialTrackers= [];
+// create a default storage constant and export the syncing variable for trackers
+const initialTrackers = [];
+export const trackers = localStorageStore('tracker-data', initialTrackers);
 
-// export the localStorage syncing array for trackers
-export const trackers = localStorageStore("tracker-data", initialTrackers);
-
-// stands to reason you can just repeat the above a few times for things like name, focus, bookmarks
-
-const initialUserName = "bees..."
-
-export const userName = localStorageStore("user-name", initialUserName)
+// create a default storage constant and export the syncing variable for trackers
+const initialUserName = '{your name}';
+export const userName = localStorageStore('user-name', initialUserName);
