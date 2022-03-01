@@ -84,7 +84,7 @@
 		currentTrackerName = tracker.name;
 		currentTrackerUrl = tracker.url;
 		currentTrackerTotalModules = tracker.totalModules;
-		currentTrackerCompletedModules = tracker.completedModules;
+		currentTrackerCompletedModules = tracker.completedModules ?? 0;
 		currentTrackerId = tracker.id;
 
 		// update trackers array to current tracker values defined above (that are bound to editable inputs)
@@ -93,7 +93,7 @@
 			name: currentTrackerName,
 			url: currentTrackerUrl,
 			totalModules: Number(currentTrackerTotalModules),
-			completedModules: Number(currentTrackerCompletedModules)
+			completedModules: Number(currentTrackerCompletedModules ?? 0)
 		};
 		// force reactivity for local storage
 		trackers = trackers;
@@ -404,7 +404,6 @@
 			appearance: none;
 			border: none;
 			width: 100%;
-			height: 2rem;
 			margin-bottom: 15px;
 		}
 
